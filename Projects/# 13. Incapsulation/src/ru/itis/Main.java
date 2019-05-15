@@ -17,6 +17,6 @@ public class Main {
         System.out.println(rectangle2.getArea());
 
         System.out.println("------");
-        System.out.println(rectangle3.width + " " + rectangle3.height);
+        System.out.println(rectangle3.getWidth() + " " + rectangle3.getHeight());
     }
 }

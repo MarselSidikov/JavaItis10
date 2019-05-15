@@ -17,10 +17,10 @@ public class Main2 {
             // создаем прямоугольник по случайной площади
             rectangles[i] = rectanglesUtils.byArea(random.nextInt(1000));
             // выводим прямоугольник на экран
-            System.out.println(rectangles[i].width + "x" + rectangles[i].height);
+            System.out.println(rectangles[i].getWidth() + "x" + rectangles[i].getHeight());
         }
 
-        rectangles[55].width = -132;
+        rectangles[55].setWidth(-132);
         // создаем массив для подсчета количество
         // полученных широт прямоугольников
         int widths[] = new int[32];
@@ -30,7 +30,7 @@ public class Main2 {
             // под индексом, соответствующем
             // ширине данного прямоугольника
             // кладем значение, равное предыдущему + 1
-            widths[(int)rectangles[i].width]++;
+            widths[(int)rectangles[i].getWidth()]++;
         }
 
         for (int i = 0; i < widths.length; i++) {
