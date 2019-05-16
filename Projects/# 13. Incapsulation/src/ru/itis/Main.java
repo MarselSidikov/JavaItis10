@@ -1,5 +1,7 @@
 package ru.itis;
 
+import static ru.itis.RectanglesUtils.byArea;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -9,8 +11,7 @@ public class Main {
 //	    rectangle.height = 5;
 //	    rectangle.width = 6;
 
-        RectanglesUtils utils = new RectanglesUtils();
-        Rectangle rectangle3 = utils.byArea(-169);
+        Rectangle rectangle3 = byArea(-169);
 
         System.out.println(rectangle.getArea());
         System.out.println(rectangle1.getArea());

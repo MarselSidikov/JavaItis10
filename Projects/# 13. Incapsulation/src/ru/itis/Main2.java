@@ -10,12 +10,11 @@ public class Main2 {
         // создали объект-генератор случайных чисел
         Random random = new Random();
         // создали объект спец. класса для генерации прямоугольников
-        RectanglesUtils rectanglesUtils = new RectanglesUtils();
 
         // бежим по всем переменным массива прямоугольников
         for (int i = 0; i < rectangles.length; i++) {
             // создаем прямоугольник по случайной площади
-            rectangles[i] = rectanglesUtils.byArea(random.nextInt(1000));
+            rectangles[i] = RectanglesUtils.byArea(random.nextInt(1000));
             // выводим прямоугольник на экран
             System.out.println(rectangles[i].getWidth() + "x" + rectangles[i].getHeight());
         }
