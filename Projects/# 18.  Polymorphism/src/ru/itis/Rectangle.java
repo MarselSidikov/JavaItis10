@@ -1,0 +1,24 @@
+package ru.itis;
+
+public class Rectangle extends Shape {
+    private double height;
+    private double width;
+
+    public Rectangle(double x, double y, double height, double width) {
+        super(x, y);
+        this.height = height;
+        this.width = width;
+    }
+
+    public double getArea() {
+        return height * width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public double getWidth() {
+        return width;
+    }
+}
