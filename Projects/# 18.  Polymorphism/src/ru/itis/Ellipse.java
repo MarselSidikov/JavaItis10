@@ -1,6 +1,6 @@
 package ru.itis;
 
-public class Ellipse extends Shape {
+public class Ellipse extends Shape implements PlaneFigure, Scalable {
     private double radiusFirst;
     private double radiusSecond;
 
@@ -20,5 +20,10 @@ public class Ellipse extends Shape {
 
     public double getRadiusSecond() {
         return radiusSecond;
+    }
+
+    public void scale(double value) {
+        this.radiusFirst = this.radiusFirst * value;
+        this.radiusSecond = this.radiusSecond * value;
     }
 }

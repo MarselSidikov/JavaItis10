@@ -1,6 +1,6 @@
 package ru.itis;
 
-public class Triangle extends Shape {
+public class Triangle extends Shape implements PlaneFigure, Scalable {
     private double aSide;
     private double bSide;
     private double cSide;
@@ -27,5 +27,11 @@ public class Triangle extends Shape {
 
     public double getCSide() {
         return cSide;
+    }
+
+    public void scale(double value) {
+        this.aSide = this.aSide * value;
+        this.bSide = this.bSide * value;
+        this.cSide = this.cSide * value;
     }
 }

@@ -1,6 +1,6 @@
 package ru.itis;
 
-public class Rectangle extends Shape {
+public class Rectangle extends Shape implements PlaneFigure, Scalable {
     private double height;
     private double width;
 
@@ -20,5 +20,10 @@ public class Rectangle extends Shape {
 
     public double getWidth() {
         return width;
+    }
+
+    public void scale(double value) {
+        this.height = this.height * value;
+        this.width = this.width * value;
     }
 }

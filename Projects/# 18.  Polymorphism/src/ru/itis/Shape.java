@@ -1,6 +1,6 @@
 package ru.itis;
 
-public abstract class Shape {
+public abstract class Shape implements Pivoted {
     protected double x;
     protected double y;
 
@@ -13,5 +13,11 @@ public abstract class Shape {
         return Math.sqrt(x * x + y * y);
     }
 
-    public abstract double getArea();
+    public void rotate(double fi) {
+        double newX = this.x * Math.cos(fi) - this.y * Math.sin(fi);
+        double newY = this.x * Math.sin(fi) + this.y * Math.cos(fi);
+
+        this.x = newX;
+        this.y = newY;
+    }
 }
