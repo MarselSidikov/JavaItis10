@@ -1,4 +1,4 @@
-package ru.itis;
+package ru.itis.examples;
 
 import java.util.Scanner;
 
