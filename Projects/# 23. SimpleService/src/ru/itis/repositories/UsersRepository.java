@@ -26,4 +26,8 @@ public class UsersRepository {
             throw new IllegalStateException(e);
         }
     }
+
+    public User[] findAll() {
+        return null;
+    }
 }

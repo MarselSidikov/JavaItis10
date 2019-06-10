@@ -1,6 +1,6 @@
-package ru.itis;
+package ru.itis.streams;
 
-public class Simple {
+public class WhyAllNotVerySimple {
     public static void main(String[] args) {
         byte b = (byte)255;
         System.out.println(b);

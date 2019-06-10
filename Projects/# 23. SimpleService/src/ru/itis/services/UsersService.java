@@ -14,6 +14,7 @@ public class UsersService {
     }
 
     public User signUp(SignUpForm form) {
+//        User.Builder myBuilder = new User.Builder();
         User user = User.builder()
                 .password(form.getPassword())
                 .login(form.getLogin())

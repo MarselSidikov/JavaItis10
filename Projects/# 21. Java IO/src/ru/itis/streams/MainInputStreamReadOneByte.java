@@ -1,4 +1,4 @@
-package ru.itis;
+package ru.itis.streams;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
