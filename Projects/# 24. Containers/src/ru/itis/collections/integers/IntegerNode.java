@@ -1,10 +1,10 @@
-package ru.itis.collections;
+package ru.itis.collections.integers;
 
-public class Node {
+public class IntegerNode {
     private int value;
-    private Node next;
+    private IntegerNode next;
 
-    public Node(int value) {
+    public IntegerNode(int value) {
         this.value = value;
     }
 
@@ -16,11 +16,11 @@ public class Node {
         this.value = value;
     }
 
-    public Node getNext() {
+    public IntegerNode getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    public void setNext(IntegerNode next) {
         this.next = next;
     }
 }

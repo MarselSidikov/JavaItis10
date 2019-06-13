@@ -1,12 +1,11 @@
 package ru.itis.tests;
 
-import ru.itis.collections.IntegerArrayList;
-import ru.itis.collections.IntegersList;
+import ru.itis.collections.integers.IntegerLinkedList;
+import ru.itis.collections.integers.IntegersList;
 
-public class MainArrayList {
-
+public class MainIntegerLinkedList {
     public static void main(String[] args) {
-        IntegersList list = new IntegerArrayList();
+        IntegersList list = new IntegerLinkedList();
         list.add(1);
         list.add(2);
         list.add(3);

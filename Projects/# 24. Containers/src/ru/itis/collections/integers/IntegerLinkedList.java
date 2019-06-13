@@ -1,8 +1,8 @@
-package ru.itis.collections;
+package ru.itis.collections.integers;
 
 public class IntegerLinkedList implements IntegersList {
-    private Node head;
-    private Node tail;
+    private IntegerNode head;
+    private IntegerNode tail;
     private int size;
 
     public IntegerLinkedList() {
@@ -23,7 +23,7 @@ public class IntegerLinkedList implements IntegersList {
 
     @Override
     public void add(int element) {
-        Node newNode = new Node(element);
+        IntegerNode newNode = new IntegerNode(element);
 
         if (this.head == null) {
             this.head = newNode;
@@ -47,6 +47,6 @@ public class IntegerLinkedList implements IntegersList {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 }

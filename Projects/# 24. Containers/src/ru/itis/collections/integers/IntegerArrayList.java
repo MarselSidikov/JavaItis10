@@ -1,4 +1,4 @@
-package ru.itis.collections;
+package ru.itis.collections.integers;
 
 public class IntegerArrayList implements IntegersList {
 
