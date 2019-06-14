@@ -20,6 +20,7 @@ public class MainObjectsLists {
         forIntegerLinkedList.add(778);
         forIntegerLinkedList.add(779);
 
+        forStringArrayList.add(1);
         forStringArrayList.add("Hello");
         forStringArrayList.add("Marsel");
         forStringArrayList.add("!");
@@ -33,6 +34,8 @@ public class MainObjectsLists {
 
         System.out.println(stringFromList);
         System.out.println(intFromList);
+
+        stringFromList = (String)forIntegerLinkedList.get(2);
         int i = 0;
     }
 }

@@ -3,10 +3,10 @@ package ru.itis.models;
 import ru.itis.exceptions.EmptyCredentialsException;
 
 public class User {
-    private int id;
+    private Long id;
     private String firstName;
     private String lastName;
-    private int age;
+    private Integer age;
     private String phone;
     private String email;
     private String login;
@@ -36,10 +36,10 @@ public class User {
     // статический вложенный класс
     public static class Builder {
         // поля, аналогичные полям обрамляющего класса User
-        private int id;
+        private Long id;
         private String firstName;
         private String lastName;
-        private int age;
+        private Integer age;
         private String phone;
         private String email;
         private String login;
@@ -50,7 +50,7 @@ public class User {
         // похожи на setters
         // но возвращают в качестве результата сам объект из которого
         // был вызван данный метод
-        public Builder id(int id) {
+        public Builder id(Long id) {
             this.id = id;
             return this;
         }
@@ -82,7 +82,7 @@ public class User {
             return this;
         }
 
-        public Builder age(int age) {
+        public Builder age(Integer age) {
             this.age = age;
             return this;
         }
@@ -113,11 +113,11 @@ public class User {
         return new Builder();
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
@@ -137,11 +137,11 @@ public class User {
         this.email = email;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
