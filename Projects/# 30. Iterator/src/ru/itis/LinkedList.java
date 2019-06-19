@@ -13,6 +13,27 @@ public class LinkedList<T> implements List<T> {
         }
     }
 
+    private class LinkedListIterator implements Iterator<T> {
+
+        Node<T> current;
+
+        LinkedListIterator() {
+            this.current = head;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public T next() {
+            T value = current.value;
+            current = current.next;
+            return value;
+        }
+    }
+
     private Node<T> head;
     private Node<T> tail;
 
@@ -51,5 +72,10 @@ public class LinkedList<T> implements List<T> {
     @Override
     public int size() {
         return size;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new LinkedListIterator();
     }
 }

@@ -10,8 +10,19 @@ public class Main {
 	    strings.add("Как");
 	    strings.add("Дела");
 
-	    for (int i = 0; i < strings.size(); i++) {
-            System.out.println(strings.get(i));
-        }
+//	    for (int i = 0; i < strings.size(); i++) {
+//            System.out.println(strings.get(i));
+//        }
+
+		Iterator<String> iterator1 = strings.iterator();
+		Iterator<String> iterator2 = strings.iterator();
+
+		while (iterator1.hasNext()) {
+			System.out.println(iterator1.next());
+		}
+
+		while (iterator2.hasNext()) {
+			System.out.println(iterator2.next());
+		}
     }
 }
