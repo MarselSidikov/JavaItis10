@@ -1,4 +1,4 @@
-package ru.itis;
+package ru.itis.trivial;
 
 public class MapEntriesArrayImpl<K, V> implements Map<K, V> {
     private static final int DEFAULT_ARRAY_SIZE = 10;

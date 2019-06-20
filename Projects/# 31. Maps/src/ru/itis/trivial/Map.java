@@ -1,4 +1,4 @@
-package ru.itis;
+package ru.itis.trivial;
 
 public interface Map<K, V> {
     void put(K key, V value);

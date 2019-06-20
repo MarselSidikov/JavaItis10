@@ -1,4 +1,4 @@
-package ru.itis;
+package ru.itis.trivial;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
