@@ -1,6 +1,8 @@
-package ru.itis;
+package ru.itis.inner;
 
-public class LinkedList<T> implements List<T> {
+import java.util.Iterator;
+
+public class LinkedList<T> implements Iterable<T> {
 
     private int size = 0;
 
@@ -37,7 +39,6 @@ public class LinkedList<T> implements List<T> {
     private Node<T> head;
     private Node<T> tail;
 
-    @Override
     public T get(int index) {
         if (size > 0 && index >= 0 && index < size) {
             Node<T> current = head;
@@ -50,7 +51,6 @@ public class LinkedList<T> implements List<T> {
         } else throw new IllegalArgumentException();
     }
 
-    @Override
     public void add(T element) {
         Node<T> newNode = new Node<>(element);
 
@@ -64,12 +64,10 @@ public class LinkedList<T> implements List<T> {
         size++;
     }
 
-    @Override
     public boolean contains(T element) {
         return false;
     }
 
-    @Override
     public int size() {
         return size;
     }

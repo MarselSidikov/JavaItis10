@@ -1,4 +1,4 @@
-package ru.itis;
+package ru.itis.custom;
 
 public interface Iterator<T> {
     boolean hasNext();

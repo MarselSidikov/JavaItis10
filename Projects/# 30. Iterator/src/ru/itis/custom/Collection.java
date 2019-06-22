@@ -1,4 +1,4 @@
-package ru.itis;
+package ru.itis.custom;
 
 public interface Collection<T> extends Iterable<T> {
     void add(T element);
