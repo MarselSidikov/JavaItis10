@@ -1,0 +1,5 @@
+1|null|null|0|null|null|marsel|qwerty007|USER
+2|Marsel|null|0|null|null|nadir|qwerty008|USER
+3|null|null|0|null|null|oleg|qwerty009|USER
+4|null|null|0|null|null|ilya|qwerty010|USER
+5|null|null|0|null|null|igor|qwerty011|USER

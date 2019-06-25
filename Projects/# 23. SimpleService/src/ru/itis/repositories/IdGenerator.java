@@ -16,7 +16,7 @@ public class IdGenerator {
         this.fileName = fileName;
     }
     // функция, генерирующая новый идентификатор
-    public int generate() {
+    public Long generate() {
         try {
             // открываем файлс последним сгенерированным id
             InputStream input = new FileInputStream(fileName);
@@ -41,7 +41,7 @@ public class IdGenerator {
             // закрываем файл
             output.close();
             // возвращаем сгенерированный id
-            return lastGeneratedId;
+            return (long) lastGeneratedId;
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
