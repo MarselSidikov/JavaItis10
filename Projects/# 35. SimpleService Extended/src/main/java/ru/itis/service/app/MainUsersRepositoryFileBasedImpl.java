@@ -7,7 +7,7 @@ import ru.itis.service.repositories.UsersRepositoryFileBasedImpl;
 import java.util.List;
 import java.util.Optional;
 
-public class Main {
+public class MainUsersRepositoryFileBasedImpl {
 
     public static void main(String[] args) {
         UsersRepository usersRepository = new UsersRepositoryFileBasedImpl("users.txt");

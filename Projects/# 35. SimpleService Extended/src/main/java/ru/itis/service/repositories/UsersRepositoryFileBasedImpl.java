@@ -15,7 +15,7 @@ public class UsersRepositoryFileBasedImpl implements UsersRepository {
 
     private String fileName;
 
-    private RowMapper<User> userRowMapper = line -> {
+    private StringsRowMaper<User> userRowMapper = line -> {
         String userData[] = line.split("\\|");
         String idString = userData[0];
         String firstName = userData[1];

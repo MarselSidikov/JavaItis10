@@ -1,5 +1,8 @@
 package ru.itis.service.repositories;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public interface RowMapper<T> {
-    T mapRow(String line);
+    T mapRow(ResultSet row) throws SQLException;
 }
