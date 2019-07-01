@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface CarsRepository extends CrudRepository<Car> {
     List<Car> findAllByOwner(User owner);
-
+    Optional<Car> findOneById(Long id);
 }
