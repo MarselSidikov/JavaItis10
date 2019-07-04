@@ -105,7 +105,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             PreparedStatement statement = connection.prepareStatement(SQL_INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, model.getFirstName());
             statement.setString(2, model.getLastName());
-            statement.setInt(3, model.getAge());
+            statement.setObject(3, model.getAge());
             statement.setString(4, model.getPhone());
             statement.setString(5, model.getEmail());
             statement.setString(6, model.getLogin());
