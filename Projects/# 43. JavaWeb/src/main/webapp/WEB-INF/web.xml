@@ -23,4 +23,8 @@
         <servlet-name>ProfileServlet</servlet-name>
         <url-pattern>/profile</url-pattern>
     </servlet-mapping>
+
+    <listener>
+        <listener-class>ru.itis.web.listeners.ComponentsContainer</listener-class>
+    </listener>
 </web-app>
