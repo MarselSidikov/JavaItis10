@@ -4,12 +4,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.itis.web.dto.SignInForm;
 import ru.itis.web.dto.SignUpForm;
+import ru.itis.web.dto.UserDto;
 import ru.itis.web.models.CookieValue;
 import ru.itis.web.models.User;
 import ru.itis.web.models.UserRole;
 import ru.itis.web.repositories.CookieValuesRepository;
 import ru.itis.web.repositories.UsersRepository;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -63,5 +66,23 @@ public class UsersServiceImpl implements UsersService {
             return Optional.of(cookieValue.getUser());
         }
         return Optional.empty();
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+        List<User> users = usersRepository.findAll();
+
+        List<UserDto> result = new ArrayList<>();
+
+        for (User user : users) {
+            UserDto userDto = UserDto.builder()
+                    .id(user.getId())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .build();
+
+            result.add(userDto);
+        }
+        return result;
     }
 }

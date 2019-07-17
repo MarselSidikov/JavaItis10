@@ -16,6 +16,9 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     //language=SQL
     private final static String SQL_FIND_BY_LOGIN = "select * from service_user where login = ?";
 
+    //language=SQL
+    private final static String SQL_FIND_ALL = "select * from service_user";
+
     private Connection connection;
 
     public UsersRepositoryJdbcImpl(Connection connection) {
@@ -82,7 +85,18 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
     @Override
     public List<User> findAll() {
-        return null;
+        try {
+            List<User> users = new ArrayList<>();
+            PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                User user = baseUserRowMapper.mapRow(resultSet);
+                users.add(user);
+            }
+            return users;
+        } catch (SQLException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     @Override

@@ -2,27 +2,16 @@ package ru.itis.web.servlets;
 
 import lombok.SneakyThrows;
 import ru.itis.web.dto.SignInForm;
-import ru.itis.web.models.CookieValue;
-import ru.itis.web.repositories.CookieValuesRepository;
-import ru.itis.web.repositories.CookieValuesRepositoryJdbcImpl;
-import ru.itis.web.repositories.UsersRepository;
-import ru.itis.web.repositories.UsersRepositoryJdbcImpl;
 import ru.itis.web.services.UsersService;
-import ru.itis.web.services.UsersServiceImpl;
 
 import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.Optional;
-import java.util.Properties;
 
 public class SignInServlet extends HttpServlet {
 
