@@ -1,4 +1,4 @@
-package ru.itis.web.repositories;
+package ru.itis.web.repositories.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

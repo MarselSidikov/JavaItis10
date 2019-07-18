@@ -1,7 +1,8 @@
-package ru.itis.web.repositories;
+package ru.itis.web.repositories.jdbc;
 
 import ru.itis.web.models.User;
 import ru.itis.web.models.UserRole;
+import ru.itis.web.repositories.UsersRepository;
 
 import java.sql.*;
 import java.util.*;

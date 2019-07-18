@@ -1,7 +1,8 @@
-package ru.itis.web.repositories;
+package ru.itis.web.repositories.jdbc;
 
 import ru.itis.web.models.CookieValue;
 import ru.itis.web.models.User;
+import ru.itis.web.repositories.CookieValuesRepository;
 
 import java.sql.*;
 import java.util.List;
@@ -20,9 +21,9 @@ public class CookieValuesRepositoryJdbcImpl implements CookieValuesRepository {
 
     private Connection connection;
 
-    public CookieValuesRepositoryJdbcImpl(Connection connection) {
-        this.connection = connection;
-    }
+//    public CookieValuesRepositoryJdbcImpl(Connection connection) {
+//        this.connection = connection;
+//    }
 
     private RowMapper<CookieValue> cookieValueRowMapper = row -> {
         User user = UsersRepositoryJdbcImpl.baseUserRowMapper.mapRow(row);

@@ -34,7 +34,7 @@ public class RedirectFilter implements Filter {
         }
     }
 
-    // проверяет наличие атрибута user в запросе 
+    // проверяет наличие атрибута user в запросе
     private boolean isAuthorized(ServletRequest request) {
         return request.getAttribute("user") != null;
     }
