@@ -1,13 +1,28 @@
 package ru.itis.web.repositories;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import ru.itis.web.models.User;
 
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
 public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
+
+    //language=SQL
+    private final static String SQL_INSERT_USER = "insert into " +
+            "service_user (first_name, last_name, age, phone, email, login, password, role) " +
+            "values (?, ?, ?, ?, ?, ?, ?, ?);";
+
+    //language=SQL
+    private final static String SQL_SELECT_ALL = "select * from service_user";
+
+    //language=SQL
+    private final static String SQL_SELECT_ONE_BY_LOGIN = "select * from service_user where login = ?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -15,7 +30,7 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    RowMapper<User> userRowMapper = (row, rowNumber) -> User.builder()
+    protected static RowMapper<User> userRowMapper = (row, rowNumber) -> User.builder()
             .id(row.getLong("id"))
             .login(row.getString("login"))
             .password(row.getString("password"))
@@ -28,7 +43,11 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     @Override
     public Optional<User> findOneByLogin(String login) {
-        return Optional.empty();
+        try {
+            return Optional.of(jdbcTemplate.queryForObject(SQL_SELECT_ONE_BY_LOGIN, userRowMapper, login));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -38,7 +57,24 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     @Override
     public User save(User model) {
-        return null;
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(con -> {
+            PreparedStatement statement = con.prepareStatement(SQL_INSERT_USER, new String[]{"id"});
+            statement.setString(1, model.getFirstName());
+            statement.setString(2, model.getLastName());
+            statement.setObject(3, model.getAge());
+            statement.setString(4, model.getPhone());
+            statement.setString(5, model.getEmail());
+            statement.setString(6, model.getLogin());
+            statement.setString(7, model.getPassword());
+            statement.setString(8, model.getRole().toString());
+            return statement;
+        }, keyHolder);
+
+        model.setId(keyHolder.getKey().longValue());
+        return model;
     }
 
     @Override
@@ -53,6 +89,6 @@ public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     @Override
     public List<User> findAll() {
-        return jdbcTemplate.query("select * from service_user", userRowMapper);
+        return jdbcTemplate.query(SQL_SELECT_ALL, userRowMapper);
     }
 }

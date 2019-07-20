@@ -1,7 +1,6 @@
 package ru.itis.web.servlets;
 
 import ru.itis.web.dto.UserDto;
-import ru.itis.web.models.User;
 import ru.itis.web.services.UsersService;
 
 import javax.servlet.ServletConfig;

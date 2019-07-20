@@ -16,3 +16,11 @@ create table cookie (
   user_id bigint,
   foreign key (user_id) references service_user(id)
 );
+
+create table car (
+  id bigserial primary key,
+  model VARCHAR(100),
+  number VARCHAR(100),
+  owner_id BIGINT,
+  FOREIGN KEY (owner_id) references service_user(id)
+);
