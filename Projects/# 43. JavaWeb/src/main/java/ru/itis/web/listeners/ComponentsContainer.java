@@ -2,7 +2,9 @@ package ru.itis.web.listeners;
 
 import lombok.SneakyThrows;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.itis.web.configuration.AppConfig;
 import ru.itis.web.services.CarsService;
 import ru.itis.web.services.UsersService;
 
@@ -28,7 +30,8 @@ public class ComponentsContainer implements ServletContextListener {
 //        UsersService usersService = new UsersServiceImpl(usersRepository, cookieValuesRepository);
 //        String fullPath = context.getRealPath("/WEB-INF/context.xml");
         ServletContext context = sce.getServletContext();
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("context.xml");
+//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("context.xml");
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(AppConfig.class);
         context.setAttribute("usersService", applicationContext.getBean(UsersService.class));
         context.setAttribute("carsService", applicationContext.getBean(CarsService.class));
     }
