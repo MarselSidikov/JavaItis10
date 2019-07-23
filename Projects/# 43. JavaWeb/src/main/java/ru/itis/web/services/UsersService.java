@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface UsersService {
     void signUp(SignUpForm form);
     Optional<String> signIn(SignInForm form);
-    Optional<User> getUserByCookie(String cookie);
+    Optional<UserDto> getUserByCookie(String cookie);
     List<UserDto> getAllUsers();
 }

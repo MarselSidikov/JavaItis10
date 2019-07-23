@@ -1,5 +1,6 @@
 package ru.itis.web.filters;
 
+import ru.itis.web.dto.UserDto;
 import ru.itis.web.models.User;
 import ru.itis.web.services.UsersService;
 
@@ -31,7 +32,7 @@ public class AuthenticationFilter implements Filter {
                 // если нашли нужную куку
                 if (cookie.getName().equals("clientId")) {
                     // достаем пользователя по этой куке
-                    Optional<User> userCandidate = usersService.getUserByCookie(cookie.getValue());
+                    Optional<UserDto> userCandidate = usersService.getUserByCookie(cookie.getValue());
                     // если пользователь есть
                     // кладем этого пользвателя в сам запрос как атрибут
                     userCandidate.ifPresent(user -> request.setAttribute("user", user));

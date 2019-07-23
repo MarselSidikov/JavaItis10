@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<script type="text/javascript">
+	function onClick(handler) {
+		// какое-то поведение click, и при этом вызов
+		// функции handler
+		handler();
+	};
+
+	function myHandler1() {
+		alert("Hello");
+	}
+
+	function myHandler2() {
+		alert("Bye");
+	}
+
+	function myHandler3() {
+		alert("Marsel");
+	}
+</script>
+<body>
+	<button onclick="onClick(myHandler1)">Нажми меня</button>
+	<button onclick="onClick(myHandler2)">Нажми меня</button>
+	<button onclick="onClick(myHandler3)">Нажми меня</button>
+</body>
+</html>

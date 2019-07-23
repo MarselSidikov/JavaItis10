@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet("/cars")
 public class CarsServlet extends HttpServlet {
@@ -42,7 +43,8 @@ public class CarsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userIdAsString = request.getParameter("user");
         Long userId = Long.parseLong(userIdAsString);
-        String body = request.getReader().readLine();
+        String body = request.getReader().lines().collect(Collectors.joining());
+        System.out.println(body);
         CarForm form = objectMapper.readValue(body, CarForm.class);
         carsService.addCarToUser(userId, form);
         List<Car> cars = carsService.getCarsByUserId(userId);

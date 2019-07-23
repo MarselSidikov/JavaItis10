@@ -1,15 +1,18 @@
 package ru.itis.web.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import ru.itis.web.models.Car;
 
 import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class CarsRepositoryJdbcTemplateImpl implements CarsRepository {
 
     //language=SQL
@@ -17,18 +20,15 @@ public class CarsRepositoryJdbcTemplateImpl implements CarsRepository {
 
     //language=SQL
     private static final String SQL_INSERT_CAR = "insert into car(model, number, owner_id) values (?, ?, ?)";
-    private JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     private RowMapper<Car> carRowMapper = (row, rowNumber) -> Car.builder()
             .id(row.getLong("id"))
             .model(row.getString("model"))
             .number(row.getString("number"))
             .build();
-
-    public CarsRepositoryJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Override
     public List<Car> findAllByUser_Id(Long userId) {

@@ -1,10 +1,12 @@
 package ru.itis.web.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 import ru.itis.web.models.CookieValue;
 import ru.itis.web.models.User;
 
@@ -12,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class CookieValuesRepositoryJdbcTemplateImpl implements CookieValuesRepository {
 
     //language=SQL
@@ -23,6 +26,7 @@ public class CookieValuesRepositoryJdbcTemplateImpl implements CookieValuesRepos
     //language=SQL
     private static final String SQL_INSERT_COOKIE = "insert  into cookie(value, user_id) values (?, ?)";
 
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     private RowMapper<CookieValue> cookieValueRowMapper = (row, rowNumber) -> {
@@ -32,10 +36,6 @@ public class CookieValuesRepositoryJdbcTemplateImpl implements CookieValuesRepos
                 .user(user)
                 .build();
     };
-
-    public CookieValuesRepositoryJdbcTemplateImpl(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Override
     public Optional<CookieValue> findOneByValue(String value) {

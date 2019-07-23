@@ -1,7 +1,9 @@
 package ru.itis.web.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 import ru.itis.web.dto.SignInForm;
 import ru.itis.web.dto.SignUpForm;
 import ru.itis.web.dto.UserDto;
@@ -16,17 +18,17 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Component
 public class UsersServiceImpl implements UsersService {
 
+    @Autowired
     private UsersRepository usersRepository;
-    private CookieValuesRepository cookieValuesRepository;
-    private PasswordEncoder passwordEncoder;
 
-    public UsersServiceImpl(UsersRepository usersRepository, CookieValuesRepository cookieValuesRepository) {
-        this.usersRepository = usersRepository;
-        this.cookieValuesRepository = cookieValuesRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
-    }
+    @Autowired
+    private CookieValuesRepository cookieValuesRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void signUp(SignUpForm form) {
@@ -59,11 +61,19 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Optional<User> getUserByCookie(String cookie) {
+    public Optional<UserDto> getUserByCookie(String cookie) {
         Optional<CookieValue> cookieValueCandidate = cookieValuesRepository.findOneByValue(cookie);
         if (cookieValueCandidate.isPresent()) {
             CookieValue cookieValue = cookieValueCandidate.get();
-            return Optional.of(cookieValue.getUser());
+            User user = cookieValue.getUser();
+            UserDto result = UserDto.builder()
+                    .id(user.getId())
+                    .firstName(user.getFirstName())
+                    .lastName(user.getLastName())
+                    .role(user.getRole().toString())
+                    .build();
+
+            return Optional.of(result);
         }
         return Optional.empty();
     }

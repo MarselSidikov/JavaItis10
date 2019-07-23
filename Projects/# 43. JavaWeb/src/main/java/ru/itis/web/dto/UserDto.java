@@ -13,4 +13,9 @@ public class UserDto {
     private Long id;
     private String firstName;
     private String lastName;
+    private String role;
+
+    public boolean isAdmin() {
+        return role.equals("ADMIN");
+    }
 }

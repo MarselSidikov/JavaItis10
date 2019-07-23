@@ -1,37 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="usersService" class="ru.itis.web.services.UsersServiceImpl">
-        <constructor-arg name="usersRepository" ref="usersRepository"/>
-        <constructor-arg name="cookieValuesRepository" ref="cookieValuesRepository"/>
-    </bean>
-
-    <bean id="carsService" class="ru.itis.web.services.CarsServiceImpl">
-        <constructor-arg name="carsRepository" ref="carsRepository"/>
-    </bean>
-
-    <bean id="carsRepository" class="ru.itis.web.repositories.CarsRepositoryJdbcTemplateImpl">
-        <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
-
-    <bean id="usersRepository" class="ru.itis.web.repositories.UsersRepositoryJdbcTemplateImpl">
-        <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
-
-    <bean id="cookieValuesRepository" class="ru.itis.web.repositories.CookieValuesRepositoryJdbcTemplateImpl">
-        <constructor-arg name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
-
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg name="dataSource" ref="dataSource"/>
-    </bean>
-
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://localhost:5432/java_120"/>
-        <property name="username" value="postgres"/>
-        <property name="password" value="qwerty007"/>
-    </bean>
+    <context:component-scan base-package="ru.itis.web"/>
 </beans>
