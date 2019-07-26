@@ -1,8 +1,11 @@
 package ru.itis.web.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,7 +15,11 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = "ru.itis.web")
+@PropertySource("db.properties")
 public class AppConfig {
+
+    @Autowired
+    private Environment environment;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -27,10 +34,10 @@ public class AppConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/java_120");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("qwerty007");
+        dataSource.setDriverClassName(environment.getProperty("db.driver"));
+        dataSource.setUrl(environment.getProperty("db.url"));
+        dataSource.setUsername(environment.getProperty("db.username"));
+        dataSource.setPassword(environment.getProperty("db.password"));
         return dataSource;
     }
 }

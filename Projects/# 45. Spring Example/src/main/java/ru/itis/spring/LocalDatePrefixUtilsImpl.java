@@ -4,7 +4,9 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.time.LocalDateTime;
 
+// реализация вывода с префиксом, префикс представляет собой - текущее время
 public class LocalDatePrefixUtilsImpl implements PrefixUtils {
+    // есть зависимость на MessageRenderer
     private MessageRenderer renderer;
 
     public LocalDatePrefixUtilsImpl(MessageRenderer renderer) {
@@ -16,10 +18,5 @@ public class LocalDatePrefixUtilsImpl implements PrefixUtils {
         renderer.render(message);
         System.out.println(LocalDateTime.now().toString());
 
-    }
-
-    @Override
-    public void setPrefix(String prefix) {
-        throw new NotImplementedException();
     }
 }

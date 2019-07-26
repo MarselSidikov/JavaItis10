@@ -1,16 +1,19 @@
 package ru.itis.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class CustomTextPrefixUtilsImpl implements PrefixUtils {
+
+    @Value("${prefix.utils.prefix}")
     private String prefix;
+
+    @Autowired
+    @Qualifier("messageRendererRed")
     private MessageRenderer renderer;
-
-    public CustomTextPrefixUtilsImpl(MessageRenderer renderer) {
-        this.renderer = renderer;
-    }
-
-    public void setPrefix(String prefix) {
-        this.prefix = prefix;
-    }
 
     @Override
     public void render(String message) {

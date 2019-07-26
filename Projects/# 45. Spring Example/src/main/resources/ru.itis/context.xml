@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:utils="http://www.springframework.org/schema/util" xmlns:util="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
-    <bean id="prefixUtils" class="ru.itis.spring.CustomTextPrefixUtilsImpl">
-        <constructor-arg name="renderer" ref="messageRenderer"/>
-        <property name="prefix" value="NAIL"/>
-    </bean>
+    <context:property-placeholder location="classpath*:ru.itis/application.properties" />
 
-    <bean id="messageRenderer" class="ru.itis.spring.MessageRendererStandardImpl"/>
+    <context:component-scan base-package="ru.itis.spring"/>
+
 </beans>
