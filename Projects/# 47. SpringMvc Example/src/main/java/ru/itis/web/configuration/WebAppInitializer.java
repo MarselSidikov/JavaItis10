@@ -2,6 +2,7 @@ package ru.itis.web.configuration;
 
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
@@ -42,6 +43,12 @@ public class WebAppInitializer implements WebApplicationInitializer {
                 .addFilter("redirectFilter", redirectFilter)
                 .addMappingForUrlPatterns(null, false, "/*");
 
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+
+        servletContext.addFilter("characterEncodingFilter", characterEncodingFilter)
+                .addMappingForUrlPatterns(null, false, "/*");
         // передаем ссылку на контекст сервлетов
         // внутрь контекста веб-приложения
         context.setServletContext(servletContext);

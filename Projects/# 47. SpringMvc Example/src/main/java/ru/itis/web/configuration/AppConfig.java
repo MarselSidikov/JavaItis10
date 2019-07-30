@@ -13,6 +13,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import javax.sql.DataSource;
 
@@ -41,12 +43,30 @@ public class AppConfig implements WebMvcConfigurer {
         return new JdbcTemplate(dataSource());
     }
 
+//    @Bean
+//    public ViewResolver viewResolver() {
+//        InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
+//        resourceViewResolver.setPrefix("WEB-INF/jsp/");
+//        resourceViewResolver.setSuffix(".jsp");
+//        return resourceViewResolver;
+//    }
+
     @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver resourceViewResolver = new InternalResourceViewResolver();
-        resourceViewResolver.setPrefix("WEB-INF/jsp/");
-        resourceViewResolver.setSuffix(".jsp");
-        return resourceViewResolver;
+    public FreeMarkerViewResolver freemarkerViewResolver() {
+        FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
+        resolver.setCache(true);
+        resolver.setPrefix("");
+        resolver.setSuffix(".ftl");
+        resolver.setContentType("text/html; charset=UTF-8");
+        return resolver;
+    }
+
+    @Bean
+    public FreeMarkerConfigurer freemarkerConfig() {
+        FreeMarkerConfigurer freeMarkerConfigurer = new FreeMarkerConfigurer();
+        freeMarkerConfigurer.setTemplateLoaderPath("/WEB-INF/ftl/");
+        freeMarkerConfigurer.setDefaultEncoding("UTF-8");
+        return freeMarkerConfigurer;
     }
 
     @Override
