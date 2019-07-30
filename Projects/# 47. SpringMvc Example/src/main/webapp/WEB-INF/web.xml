@@ -55,5 +55,4 @@
         <filter-name>rolesFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-
 </web-app>

@@ -3,6 +3,7 @@ package ru.itis.web.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.itis.web.dto.CarForm;
@@ -17,12 +18,11 @@ public class CarsController {
     private CarsService carsService;
 
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
-    public ModelAndView getCarsPage(@RequestParam("user") Long userId) {
-        ModelAndView modelAndView = new ModelAndView("cars");
+    public String getCarsPage(Model model, @RequestParam("user") Long userId) {
         List<Car> cars = carsService.getCarsByUserId(userId);
-        modelAndView.addObject("cars", cars);
-        modelAndView.addObject("userId", userId);
-        return modelAndView;
+        model.addAttribute("cars", cars);
+        model.addAttribute("userId", userId);
+        return "cars";
     }
 
     @RequestMapping(value = "/cars", method = RequestMethod.POST,

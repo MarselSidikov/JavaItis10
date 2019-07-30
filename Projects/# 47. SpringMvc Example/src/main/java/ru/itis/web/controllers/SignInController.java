@@ -19,16 +19,16 @@ public class SignInController {
     private UsersService usersService;
 
     @RequestMapping(value = "/signIn", method = RequestMethod.POST)
-    public ModelAndView signIn(SignInForm form, HttpServletResponse response) {
+    public String signIn(SignInForm form, HttpServletResponse response) {
         usersService.signIn(form);
         Optional<String> cookieCandidate = usersService.signIn(form);
 
         if (cookieCandidate.isPresent()) {
             Cookie cookie = new Cookie("clientId", cookieCandidate.get());
             response.addCookie(cookie);
-            return new ModelAndView("redirect:/profile");
+            return "redirect:/profile";
         } else {
-            return new ModelAndView("redirect:/signIn");
+            return "redirect:/signIn";
         }
     }
 

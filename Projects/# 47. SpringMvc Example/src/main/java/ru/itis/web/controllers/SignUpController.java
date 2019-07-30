@@ -21,8 +21,8 @@ public class SignUpController {
     }
 
     @RequestMapping(value = "/signUp", method = RequestMethod.POST)
-    public ModelAndView signUp(SignUpForm form) {
+    public String signUp(SignUpForm form) {
         usersService.signUp(form);
-        return new ModelAndView("redirect:/signIn");
+        return "redirect:/signIn";
     }
 }

@@ -2,6 +2,7 @@ package ru.itis.web.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,13 +17,10 @@ public class UsersController {
     private UsersService usersService;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public ModelAndView getUsersPage() {
-        ModelAndView modelAndView = new ModelAndView();
-
+    public String getUsersPage(Model model) {
         List<UserDto> users = usersService.getAllUsers();
+        model.addAttribute("users", users);
 
-        modelAndView.addObject("users", users);
-        modelAndView.setViewName("users");
-        return modelAndView;
+        return "users";
     }
 }
