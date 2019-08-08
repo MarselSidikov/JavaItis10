@@ -3,7 +3,7 @@ package ru.itdrive.step4;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListsProcessor{
+public class ListsProcessor {
 
     // функция принимает на вход
     // какую-то функцию, которая отображет
