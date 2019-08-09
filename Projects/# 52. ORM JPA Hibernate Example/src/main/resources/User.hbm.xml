@@ -1,0 +1,23 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="ru.itis.orm.User" table="service_user">
+        <id name="id" type="java.lang.Long">
+            <generator class="identity"/>
+        </id>
+
+        <property name="firstName" column="first_name"/>
+        <property name="lastName" column="last_name"/>
+        <property name="age"/>
+
+        <bag name="cars" lazy="true">
+            <key>
+                <column name="owner_id"/>
+            </key>
+            <one-to-many class="ru.itis.orm.Car"/>
+        </bag>
+    </class>
+</hibernate-mapping>

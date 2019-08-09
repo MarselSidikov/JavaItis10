@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/for_hibernate</property>
+        <property name="hibernate.connection.username">postgres</property>
+        <property name="hibernate.connection.password"> qwerty007</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL95Dialect</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.show_sql">true</property>
+<!--        <mapping resource="User.hbm.xml"/>-->
+<!--        <mapping resource="Car.hbm.xml"/>-->
+        <mapping class="ru.itis.orm.User"/>
+        <mapping class="ru.itis.orm.Car"/>
+    </session-factory>
+</hibernate-configuration>
