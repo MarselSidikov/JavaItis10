@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Component(value = "cookie.values.repository.jdbc.template.impl")
 public class CookieValuesRepositoryJdbcTemplateImpl implements CookieValuesRepository {
 
     //language=SQL

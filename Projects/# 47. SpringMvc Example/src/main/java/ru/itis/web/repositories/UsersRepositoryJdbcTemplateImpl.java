@@ -14,7 +14,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Component(value = "users.repository.jdbc.template.impl")
 public class UsersRepositoryJdbcTemplateImpl implements UsersRepository {
 
     //language=SQL

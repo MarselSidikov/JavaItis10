@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Component(value = "cars.repository.jdbc.template.impl")
 public class CarsRepositoryJdbcTemplateImpl implements CarsRepository {
 
     //language=SQL

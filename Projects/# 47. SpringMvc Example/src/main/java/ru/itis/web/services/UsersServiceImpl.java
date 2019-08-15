@@ -1,8 +1,10 @@
 package ru.itis.web.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.itis.web.dto.SignInForm;
 import ru.itis.web.dto.SignUpForm;
 import ru.itis.web.dto.UserDto;
@@ -21,14 +23,17 @@ import java.util.UUID;
 public class UsersServiceImpl implements UsersService {
 
     @Autowired
+    @Qualifier(value = "users.repository.jpa.impl")
     private UsersRepository usersRepository;
 
     @Autowired
+    @Qualifier(value = "cookie.values.repository.jpa.impl")
     private CookieValuesRepository cookieValuesRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
     public void signUp(SignUpForm form) {
         User user = User.builder()
@@ -41,6 +46,7 @@ public class UsersServiceImpl implements UsersService {
         usersRepository.save(user);
     }
 
+    @Transactional
     @Override
     public Optional<String> signIn(SignInForm form) {
         Optional<User> userCandidate = usersRepository.findOneByLogin(form.getLogin());
@@ -59,6 +65,7 @@ public class UsersServiceImpl implements UsersService {
         return Optional.empty();
     }
 
+    @Transactional
     @Override
     public Optional<UserDto> getUserByCookie(String cookie) {
         Optional<CookieValue> cookieValueCandidate = cookieValuesRepository.findOneByValue(cookie);
@@ -77,6 +84,7 @@ public class UsersServiceImpl implements UsersService {
         return Optional.empty();
     }
 
+    @Transactional
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = usersRepository.findAll();
