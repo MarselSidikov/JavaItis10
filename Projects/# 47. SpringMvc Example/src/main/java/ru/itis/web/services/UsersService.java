@@ -1,7 +1,7 @@
 package ru.itis.web.services;
 
-import ru.itis.web.dto.SignInForm;
-import ru.itis.web.dto.SignUpForm;
+import ru.itis.web.forms.SignInForm;
+import ru.itis.web.forms.SignUpForm;
 import ru.itis.web.dto.UserDto;
 
 import java.util.List;

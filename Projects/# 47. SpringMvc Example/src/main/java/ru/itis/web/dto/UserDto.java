@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.itis.web.models.User;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +21,20 @@ public class UserDto {
 
     public boolean isAdmin() {
         return role.equals("ADMIN");
+    }
+
+    public static UserDto from(User model) {
+        return UserDto.builder()
+                .id(model.getId())
+                .firstName(model.getFirstName())
+                .lastName(model.getLastName())
+                .role(model.getRole().toString())
+                .build();
+    }
+
+    public static List<UserDto> from(List<User> models) {
+        return models.stream()
+                .map(UserDto::from)
+                .collect(Collectors.toList());
     }
 }

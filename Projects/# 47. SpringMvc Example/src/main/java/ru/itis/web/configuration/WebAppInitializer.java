@@ -18,11 +18,11 @@ public class WebAppInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         // создаем специальный объект-контекст для веб приложений
-        AnnotationConfigWebApplicationContext context =
+        AnnotationConfigWebApplicationContext springContext =
                 new AnnotationConfigWebApplicationContext();
 
         // регистрируем в этом контексте контекст спринга
-        context.register(AppConfig.class);
+        springContext.register(AppConfig.class);
         // создаем три объекта DelegatingFilterProxy для того,
         // чтобы ваши фильтры тоже были бинами и в них можно было бы
         // автовайрить сервисы
@@ -51,14 +51,14 @@ public class WebAppInitializer implements WebApplicationInitializer {
                 .addMappingForUrlPatterns(null, false, "/*");
         // передаем ссылку на контекст сервлетов
         // внутрь контекста веб-приложения
-        context.setServletContext(servletContext);
+        springContext.setServletContext(servletContext);
         // создаем диспатчер-сервлет и тут-же помещаем его в контекст
         // сервлетов
         // дисптачер-сервлету в свою очередь передаем контекст веб-приложения
         // чтобы он видел все бины
         // раньше это было автоматически - он находит context.xml
         ServletRegistration.Dynamic dispatcherServlet =
-                servletContext.addServlet("dispatcher", new DispatcherServlet(context));
+                servletContext.addServlet("dispatcher", new DispatcherServlet(springContext));
         // сказали что этот сервлет должен запускаться сразу при запуске приложения
         dispatcherServlet.setLoadOnStartup(1);
         // и принимал запросы на все урлы

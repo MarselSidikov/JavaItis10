@@ -54,16 +54,6 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/java_120");
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("qwerty007");
-        return dataSource;
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -71,6 +61,16 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
+    }
+
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/java_120");
+        dataSource.setDriverClassName("org.postgresql.Driver");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("qwerty007");
+        return dataSource;
     }
 
     @Bean

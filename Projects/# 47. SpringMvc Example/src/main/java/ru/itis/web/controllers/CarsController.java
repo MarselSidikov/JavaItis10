@@ -5,8 +5,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import ru.itis.web.dto.CarForm;
+import ru.itis.web.dto.CarDto;
+import ru.itis.web.forms.CarForm;
 import ru.itis.web.models.Car;
 import ru.itis.web.services.CarsService;
 
@@ -19,7 +19,7 @@ public class CarsController {
 
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
     public String getCarsPage(Model model, @RequestParam("user") Long userId) {
-        List<Car> cars = carsService.getCarsByUserId(userId);
+        List<CarDto> cars = carsService.getCarsByUserId(userId);
         model.addAttribute("cars", cars);
         model.addAttribute("userId", userId);
         return "cars";
@@ -29,8 +29,8 @@ public class CarsController {
     produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
-    public List<Car> addCarToUser(@RequestParam("user") Long userId,
-                                  @RequestBody CarForm form) {
+    public List<CarDto> addCarToUser(@RequestParam("user") Long userId,
+                                     @RequestBody CarForm form) {
         carsService.addCarToUser(userId, form);
         return carsService.getCarsByUserId(userId);
     }

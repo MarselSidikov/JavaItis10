@@ -2,15 +2,17 @@ package ru.itis.web.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.itis.web.dto.CarForm;
+import ru.itis.web.dto.CarDto;
+import ru.itis.web.forms.CarForm;
 import ru.itis.web.models.Car;
 import ru.itis.web.models.User;
 import ru.itis.web.repositories.CarsRepository;
 
 import java.util.List;
+
+import static ru.itis.web.dto.CarDto.from;
 
 @Service
 public class CarsServiceImpl implements CarsService {
@@ -21,8 +23,8 @@ public class CarsServiceImpl implements CarsService {
 
     @Transactional
     @Override
-    public List<Car> getCarsByUserId(Long userId) {
-        return carsRepository.findAllByUser_Id(userId);
+    public List<CarDto> getCarsByUserId(Long userId) {
+        return from(carsRepository.findAllByUser_Id(userId));
     }
 
     @Override

@@ -1,44 +1,43 @@
-package ru.itis.web.repositories.jpa;
+package ru.itis.web.repositories.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.itis.web.models.CookieValue;
-import ru.itis.web.repositories.CookieValuesRepository;
+import ru.itis.web.models.Car;
+import ru.itis.web.repositories.CarsRepository;
 
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Component(value = "cookie.values.repository.jpa.impl")
-public class CookieValuesRepositoryJpaImpl implements CookieValuesRepository {
+@Component(value = "cars.repository.jpa.impl")
+public class CarsRepositoryJpaImpl implements CarsRepository {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     @Override
-    public Optional<CookieValue> findOneByValue(String value) {
+    public List<Car> findAllByUser_Id(Long userId) {
         Session session = sessionFactory.getCurrentSession();
         try {
-            Query<CookieValue> cookieValueQuery = session.createQuery("from CookieValue where value = :value", CookieValue.class)
-                    .setParameter("value", value);
-            CookieValue cookieValue = cookieValueQuery.getSingleResult();
-            return Optional.ofNullable(cookieValue);
+            Query<Car> carQuery = session.createQuery("from Car car where car.owner.id = :userId", Car.class)
+                    .setParameter("userId", userId);
+            return carQuery.getResultList();
         } catch (NoResultException e) {
-            return Optional.empty();
+            return new ArrayList<>();
         }
     }
 
     @Override
-    public Optional<CookieValue> findOneById(Long id) {
+    public Optional<Car> findOneById(Long id) {
         return Optional.empty();
     }
 
     @Override
-    public CookieValue save(CookieValue model) {
+    public Car save(Car model) {
         Session session = sessionFactory.getCurrentSession();
 //        Transaction transaction = session.beginTransaction();
         session.persist(model);
@@ -47,7 +46,7 @@ public class CookieValuesRepositoryJpaImpl implements CookieValuesRepository {
     }
 
     @Override
-    public void update(CookieValue model) {
+    public void update(Car model) {
 
     }
 
@@ -57,7 +56,7 @@ public class CookieValuesRepositoryJpaImpl implements CookieValuesRepository {
     }
 
     @Override
-    public List<CookieValue> findAll() {
+    public List<Car> findAll() {
         return null;
     }
 }

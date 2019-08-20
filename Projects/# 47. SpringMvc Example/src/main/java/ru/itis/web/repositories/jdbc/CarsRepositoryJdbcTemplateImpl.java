@@ -1,4 +1,4 @@
-package ru.itis.web.repositories;
+package ru.itis.web.repositories.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import ru.itis.web.models.Car;
+import ru.itis.web.repositories.CarsRepository;
 
 import java.sql.PreparedStatement;
 import java.util.List;

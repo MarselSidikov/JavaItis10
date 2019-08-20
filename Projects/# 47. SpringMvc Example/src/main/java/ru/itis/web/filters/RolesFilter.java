@@ -14,14 +14,13 @@ public class RolesFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("ROLES");
         UserDto currentUser = (UserDto) servletRequest.getAttribute("user");
 
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
 
         if (request.getMethod().equals("POST") && request.getServletPath().equals("/cars")) {
-            if (currentUser.isAdmin()) {
+            if (currentUser != null && currentUser.isAdmin()) {
                 filterChain.doFilter(request, response);
             } else {
                 response.setStatus(403);

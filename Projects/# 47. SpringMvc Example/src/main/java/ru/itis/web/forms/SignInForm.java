@@ -1,4 +1,4 @@
-package ru.itis.web.dto;
+package ru.itis.web.forms;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

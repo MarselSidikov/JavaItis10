@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.itis.web.dto.SignInForm;
-import ru.itis.web.dto.SignUpForm;
+import ru.itis.web.forms.SignInForm;
+import ru.itis.web.forms.SignUpForm;
 import ru.itis.web.dto.UserDto;
 import ru.itis.web.models.CookieValue;
 import ru.itis.web.models.User;
@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import static ru.itis.web.dto.UserDto.from;
 
 @Component
 public class UsersServiceImpl implements UsersService {
@@ -72,14 +74,7 @@ public class UsersServiceImpl implements UsersService {
         if (cookieValueCandidate.isPresent()) {
             CookieValue cookieValue = cookieValueCandidate.get();
             User user = cookieValue.getUser();
-            UserDto result = UserDto.builder()
-                    .id(user.getId())
-                    .firstName(user.getFirstName())
-                    .lastName(user.getLastName())
-                    .role(user.getRole().toString())
-                    .build();
-
-            return Optional.of(result);
+            return Optional.of(from(user));
         }
         return Optional.empty();
     }
@@ -88,18 +83,6 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = usersRepository.findAll();
-
-        List<UserDto> result = new ArrayList<>();
-
-        for (User user : users) {
-            UserDto userDto = UserDto.builder()
-                    .id(user.getId())
-                    .firstName(user.getFirstName())
-                    .lastName(user.getLastName())
-                    .build();
-
-            result.add(userDto);
-        }
-        return result;
+        return from(users);
     }
 }

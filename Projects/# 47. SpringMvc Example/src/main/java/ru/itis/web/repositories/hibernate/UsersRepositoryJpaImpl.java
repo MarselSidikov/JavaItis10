@@ -1,4 +1,4 @@
-package ru.itis.web.repositories.jpa;
+package ru.itis.web.repositories.hibernate;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
