@@ -25,11 +25,9 @@ import static ru.itis.web.dto.UserDto.from;
 public class UsersServiceImpl implements UsersService {
 
     @Autowired
-    @Qualifier(value = "users.repository.jpa.impl")
     private UsersRepository usersRepository;
 
     @Autowired
-    @Qualifier(value = "cookie.values.repository.jpa.impl")
     private CookieValuesRepository cookieValuesRepository;
 
     @Autowired
@@ -51,7 +49,7 @@ public class UsersServiceImpl implements UsersService {
     @Transactional
     @Override
     public Optional<String> signIn(SignInForm form) {
-        Optional<User> userCandidate = usersRepository.findOneByLogin(form.getLogin());
+        Optional<User> userCandidate = usersRepository.findByLogin(form.getLogin());
 
         if (userCandidate.isPresent()) {
             User user = userCandidate.get();
@@ -70,7 +68,7 @@ public class UsersServiceImpl implements UsersService {
     @Transactional
     @Override
     public Optional<UserDto> getUserByCookie(String cookie) {
-        Optional<CookieValue> cookieValueCandidate = cookieValuesRepository.findOneByValue(cookie);
+        Optional<CookieValue> cookieValueCandidate = cookieValuesRepository.findByValue(cookie);
         if (cookieValueCandidate.isPresent()) {
             CookieValue cookieValue = cookieValueCandidate.get();
             User user = cookieValue.getUser();

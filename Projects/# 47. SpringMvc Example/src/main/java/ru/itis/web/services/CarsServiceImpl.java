@@ -18,13 +18,12 @@ import static ru.itis.web.dto.CarDto.from;
 public class CarsServiceImpl implements CarsService {
 
     @Autowired
-    @Qualifier(value = "cars.repository.jpa.impl")
     private CarsRepository carsRepository;
 
     @Transactional
     @Override
     public List<CarDto> getCarsByUserId(Long userId) {
-        return from(carsRepository.findAllByUser_Id(userId));
+        return from(carsRepository.findAllByOwner_Id(userId));
     }
 
     @Override
