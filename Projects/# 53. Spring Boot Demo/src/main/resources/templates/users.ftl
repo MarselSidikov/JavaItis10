@@ -22,6 +22,7 @@
                 <td>${user.id}</td>
                 <td>${user.firstName}</td>
                 <td>${user.lastName}</td>
+                <td><a href="/cars?user=${user.id}">Машины</a></td>
             </tr>
         </#list>
         </>

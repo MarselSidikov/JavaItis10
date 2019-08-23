@@ -1,5 +1,6 @@
 package ru.itis.springboot.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,4 +29,11 @@ public class User {
     private String email;
     private String login;
     private String password;
+
+    @Enumerated(value = EnumType.STRING)
+    private UserRole role;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Car> cars;
 }
