@@ -32,7 +32,7 @@ public class RedirectFilter implements Filter {
             }
         } else {
             // если пользователь не был авторизован, и просит любую странцу, кроме регистрации и авторизации
-            if (!isSignInPage(request) && !isSignUpPage(request)) {
+            if (!isSignInPage(request) && !isSignUpPage(request) && !isEmailConfirmPage(request)) {
                 // отправляем его на авторизацию
                 response.sendRedirect("/signIn");
             } else {
@@ -57,6 +57,10 @@ public class RedirectFilter implements Filter {
 
     private boolean isSignUpPage(HttpServletRequest request) {
         return request.getServletPath().equals("/signUp");
+    }
+
+    private boolean isEmailConfirmPage(HttpServletRequest request) {
+        return request.getServletPath().equals("/email/confirm");
     }
 
 

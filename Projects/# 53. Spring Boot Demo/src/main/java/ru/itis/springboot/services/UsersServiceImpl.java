@@ -1,6 +1,11 @@
 package ru.itis.springboot.services;
 
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,13 +14,13 @@ import ru.itis.springboot.forms.SignInForm;
 import ru.itis.springboot.forms.SignUpForm;
 import ru.itis.springboot.models.CookieValue;
 import ru.itis.springboot.models.User;
-import ru.itis.springboot.models.UserRole;
+import ru.itis.springboot.models.enums.UserRole;
+import ru.itis.springboot.models.enums.UserState;
 import ru.itis.springboot.repositories.CookieValuesRepository;
 import ru.itis.springboot.repositories.UsersRepository;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.io.StringWriter;
+import java.util.*;
 
 import static ru.itis.springboot.dto.UserDto.from;
 
@@ -31,16 +36,34 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private EmailService emailService;
+
+    @Value("${mail.confirm.subject}")
+    private String subject;
+
+    @Value("${server.url}")
+    private String serverUrl;
+
+    @Autowired
+    private Template confirmMailTemplate;
+
     @Transactional
     @Override
-    public void signUp(SignUpForm form) {
-        User user = User.builder()
-                .password(passwordEncoder.encode(form.getPassword()))
-                .login(form.getLogin())
-                .role(UserRole.USER)
-                .firstName(form.getFirstName())
-                .lastName(form.getLastName())
-                .build();
+    public void signUp(String uuid, SignUpForm form) {
+
+        User user = usersRepository.findByConfirmUUID(uuid);
+
+        cookieValuesRepository.deleteAllByUser(user);
+
+        user.setPassword(passwordEncoder.encode(form.getPassword()));
+        user.setLogin(form.getLogin());
+        user.setRole(UserRole.USER);
+        user.setFirstName(form.getFirstName());
+        user.setLastName(form.getLastName());
+        user.setState(UserState.CONFIRMED);
+        user.setConfirmUUID(null);
+
         usersRepository.save(user);
     }
 
@@ -70,7 +93,11 @@ public class UsersServiceImpl implements UsersService {
         if (cookieValueCandidate.isPresent()) {
             CookieValue cookieValue = cookieValueCandidate.get();
             User user = cookieValue.getUser();
-            return Optional.of(from(user));
+            if (user.getState().equals(UserState.CONFIRMED)) {
+                return Optional.of(from(user));
+            } else {
+                return Optional.empty();
+            }
         }
         return Optional.empty();
     }
@@ -80,5 +107,56 @@ public class UsersServiceImpl implements UsersService {
     public List<UserDto> getAllUsers() {
         List<User> users = usersRepository.findAll();
         return from(users);
+    }
+
+    @SneakyThrows
+    @Override
+    public void emailConfirm(String email) {
+
+        Optional<User> user = usersRepository.findByEmail(email);
+
+        User newUser;
+
+//        if (user.isPresent()) {
+//            newUser = user.get();
+//        } else {
+//            newUser = User.builder()
+//                    .email(email)
+//                    .build();
+//        }
+
+        newUser = user.orElseGet(() -> User.builder()
+                .email(email)
+                .build());
+
+        newUser.setState(UserState.NOT_CONFIRMED);
+        newUser.setConfirmUUID(UUID.randomUUID().toString());
+
+        usersRepository.save(newUser);
+
+        Runnable confirmMailTask = () -> {
+            Map<String, Object> placeholders = new HashMap<>();
+            placeholders.put("host", serverUrl);
+            placeholders.put("id", newUser.getConfirmUUID());
+
+            StringWriter stringWriter = new StringWriter();
+            try {
+                confirmMailTemplate.process(placeholders, stringWriter);
+
+            } catch (Exception e) {
+                throw new IllegalArgumentException(e);
+            }
+            String mailText = stringWriter.toString();
+
+            emailService.sendEmail(newUser.getEmail(), subject, mailText);
+        };
+
+        Thread confirmMailThread = new Thread(confirmMailTask);
+        confirmMailThread.start();
+    }
+
+    @Override
+    public boolean isValidUUID(String uuid) {
+        return usersRepository.existsByConfirmUUID(uuid);
     }
 }

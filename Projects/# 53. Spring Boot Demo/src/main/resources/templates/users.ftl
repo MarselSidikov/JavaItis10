@@ -25,7 +25,6 @@
                 <td><a href="/cars?user=${user.id}">Машины</a></td>
             </tr>
         </#list>
-        </>
     </table>
 </div>
 </body>

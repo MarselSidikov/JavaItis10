@@ -2,6 +2,8 @@ package ru.itis.springboot.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import ru.itis.springboot.models.enums.UserRole;
+import ru.itis.springboot.models.enums.UserState;
 
 import javax.persistence.*;
 import java.util.List;
@@ -33,7 +35,12 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRole role;
 
+    @Enumerated(value = EnumType.STRING)
+    private UserState state;
+
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Car> cars;
+
+    private String confirmUUID;
 }
