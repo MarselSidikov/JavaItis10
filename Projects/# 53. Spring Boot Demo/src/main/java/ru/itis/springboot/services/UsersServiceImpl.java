@@ -3,6 +3,8 @@ package ru.itis.springboot.services;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.SneakyThrows;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,11 +23,14 @@ import ru.itis.springboot.repositories.UsersRepository;
 
 import java.io.StringWriter;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
 
 import static ru.itis.springboot.dto.UserDto.from;
 
 @Component
 public class UsersServiceImpl implements UsersService {
+
+    private Logger logger = LoggerFactory.getLogger(UsersServiceImpl.class);
 
     @Autowired
     private UsersRepository usersRepository;
@@ -47,6 +52,9 @@ public class UsersServiceImpl implements UsersService {
 
     @Autowired
     private Template confirmMailTemplate;
+
+    @Autowired
+    private ExecutorService executorService;
 
     @Transactional
     @Override
@@ -148,11 +156,12 @@ public class UsersServiceImpl implements UsersService {
             }
             String mailText = stringWriter.toString();
 
+            logger.info("Send email to " + newUser.getEmail() + " by thread " + Thread.currentThread().getName());
             emailService.sendEmail(newUser.getEmail(), subject, mailText);
+
         };
 
-        Thread confirmMailThread = new Thread(confirmMailTask);
-        confirmMailThread.start();
+        executorService.submit(confirmMailTask);
     }
 
     @Override
