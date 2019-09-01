@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
 public class RolesFilter implements Filter {
 
     private Logger logger = LoggerFactory.getLogger(RolesFilter.class);

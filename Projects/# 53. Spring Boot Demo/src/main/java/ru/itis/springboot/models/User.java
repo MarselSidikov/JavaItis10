@@ -30,7 +30,7 @@ public class User {
     private String phone;
     private String email;
     private String login;
-    private String password;
+    private String hashPassword;
 
     @Enumerated(value = EnumType.STRING)
     private UserRole role;

@@ -19,19 +19,19 @@ public class SignInController {
     @Autowired
     private UsersService usersService;
 
-    @PostMapping(value = "/signIn")
-    public String signIn(SignInForm form, HttpServletResponse response) {
-        usersService.signIn(form);
-        Optional<String> cookieCandidate = usersService.signIn(form);
-
-        if (cookieCandidate.isPresent()) {
-            Cookie cookie = new Cookie("clientId", cookieCandidate.get());
-            response.addCookie(cookie);
-            return "redirect:/profile";
-        } else {
-            return "redirect:/signIn";
-        }
-    }
+//    @PostMapping(value = "/signIn")
+//    public String signIn(SignInForm form, HttpServletResponse response) {
+//        usersService.signIn(form);
+//        Optional<String> cookieCandidate = usersService.signIn(form);
+//
+//        if (cookieCandidate.isPresent()) {
+//            Cookie cookie = new Cookie("clientId", cookieCandidate.get());
+//            response.addCookie(cookie);
+//            return "redirect:/profile";
+//        } else {
+//            return "redirect:/signIn";
+//        }
+//    }
 
     @GetMapping(value = "/signIn")
     public String getSignInPage() {

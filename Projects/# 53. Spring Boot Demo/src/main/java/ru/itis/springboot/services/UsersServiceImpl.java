@@ -1,12 +1,10 @@
 package ru.itis.springboot.services;
 
-import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -38,7 +36,6 @@ public class UsersServiceImpl implements UsersService {
     @Autowired
     private CookieValuesRepository cookieValuesRepository;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -64,7 +61,7 @@ public class UsersServiceImpl implements UsersService {
 
         cookieValuesRepository.deleteAllByUser(user);
 
-        user.setPassword(passwordEncoder.encode(form.getPassword()));
+        user.setHashPassword(passwordEncoder.encode(form.getPassword()));
         user.setLogin(form.getLogin());
         user.setRole(UserRole.USER);
         user.setFirstName(form.getFirstName());
@@ -82,7 +79,7 @@ public class UsersServiceImpl implements UsersService {
 
         if (userCandidate.isPresent()) {
             User user = userCandidate.get();
-            if (passwordEncoder.matches(form.getPassword(), user.getPassword())) {
+            if (passwordEncoder.matches(form.getPassword(), user.getHashPassword())) {
                 CookieValue cookieValue = CookieValue.builder()
                         .value(UUID.randomUUID().toString())
                         .user(user)
