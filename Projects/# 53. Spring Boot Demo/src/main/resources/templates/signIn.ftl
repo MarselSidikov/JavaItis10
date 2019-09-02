@@ -10,9 +10,12 @@
 <body>
 <div>
     <form action="/signIn" method="post">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <input type="text" name="login" placeholder="Login">
         <br>
         <input type="password" name="password" placeholder="Password">
+        <br>
+            <input type="checkbox" name="remember-me"> Запомни меня
         <br>
         <input type="submit" value="SignIn">
     </form>

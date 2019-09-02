@@ -43,7 +43,7 @@
         <datalist id="modelsList">
         </datalist>
         <input id="number" name="number" placeholder="Number">
-        <button onclick="sendCar(${userId},
+        <button onclick="sendCar('${_csrf.token}', ${userId},
                 $('#model').val(),
                 $('#number').val())">Add
         </button>

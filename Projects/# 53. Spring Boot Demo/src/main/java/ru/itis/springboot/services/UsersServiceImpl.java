@@ -10,13 +10,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.itis.springboot.dto.UserDto;
-import ru.itis.springboot.forms.SignInForm;
 import ru.itis.springboot.forms.SignUpForm;
-import ru.itis.springboot.models.CookieValue;
 import ru.itis.springboot.models.User;
 import ru.itis.springboot.models.enums.UserRole;
 import ru.itis.springboot.models.enums.UserState;
-import ru.itis.springboot.repositories.CookieValuesRepository;
 import ru.itis.springboot.repositories.UsersRepository;
 
 import java.io.StringWriter;
@@ -34,8 +31,6 @@ public class UsersServiceImpl implements UsersService {
     private UsersRepository usersRepository;
 
     @Autowired
-    private CookieValuesRepository cookieValuesRepository;
-
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -59,8 +54,6 @@ public class UsersServiceImpl implements UsersService {
 
         User user = usersRepository.findByConfirmUUID(uuid);
 
-        cookieValuesRepository.deleteAllByUser(user);
-
         user.setHashPassword(passwordEncoder.encode(form.getPassword()));
         user.setLogin(form.getLogin());
         user.setRole(UserRole.USER);
@@ -70,41 +63,6 @@ public class UsersServiceImpl implements UsersService {
         user.setConfirmUUID(null);
 
         usersRepository.save(user);
-    }
-
-    @Transactional
-    @Override
-    public Optional<String> signIn(SignInForm form) {
-        Optional<User> userCandidate = usersRepository.findByLogin(form.getLogin());
-
-        if (userCandidate.isPresent()) {
-            User user = userCandidate.get();
-            if (passwordEncoder.matches(form.getPassword(), user.getHashPassword())) {
-                CookieValue cookieValue = CookieValue.builder()
-                        .value(UUID.randomUUID().toString())
-                        .user(user)
-                        .build();
-                cookieValuesRepository.save(cookieValue);
-                return Optional.of(cookieValue.getValue());
-            }
-        }
-        return Optional.empty();
-    }
-
-    @Transactional
-    @Override
-    public Optional<UserDto> getUserByCookie(String cookie) {
-        Optional<CookieValue> cookieValueCandidate = cookieValuesRepository.findByValue(cookie);
-        if (cookieValueCandidate.isPresent()) {
-            CookieValue cookieValue = cookieValueCandidate.get();
-            User user = cookieValue.getUser();
-            if (user.getState().equals(UserState.CONFIRMED)) {
-                return Optional.of(from(user));
-            } else {
-                return Optional.empty();
-            }
-        }
-        return Optional.empty();
     }
 
     @Transactional
@@ -120,17 +78,7 @@ public class UsersServiceImpl implements UsersService {
 
         Optional<User> user = usersRepository.findByEmail(email);
 
-        User newUser;
-
-//        if (user.isPresent()) {
-//            newUser = user.get();
-//        } else {
-//            newUser = User.builder()
-//                    .email(email)
-//                    .build();
-//        }
-
-        newUser = user.orElseGet(() -> User.builder()
+        User newUser = user.orElseGet(() -> User.builder()
                 .email(email)
                 .build());
 
@@ -162,7 +110,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public boolean isValidUUID(String uuid) {
-        return usersRepository.existsByConfirmUUID(uuid);
+    public boolean isNotValidUUID(String uuid) {
+        return !usersRepository.existsByConfirmUUID(uuid);
     }
 }

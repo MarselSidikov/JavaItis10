@@ -1,4 +1,4 @@
-function sendCar(userId, model, number) {
+function sendCar(csrf, userId, model, number) {
     let body = {
         "model": model,
         "number": number
@@ -8,6 +8,9 @@ function sendCar(userId, model, number) {
         url: '/cars?user=' + userId,
         contentType: 'application/json',
         type: 'post',
+        headers : {
+            'X-CSRF-TOKEN': csrf
+        },
         dataType: 'json',
         data: JSON.stringify(body),
         success: function (response) {

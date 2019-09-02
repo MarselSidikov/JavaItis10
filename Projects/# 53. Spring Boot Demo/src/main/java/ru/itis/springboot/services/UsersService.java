@@ -9,11 +9,9 @@ import java.util.Optional;
 
 public interface UsersService {
     void signUp(String uuid, SignUpForm form);
-    Optional<String> signIn(SignInForm form);
-    Optional<UserDto> getUserByCookie(String cookie);
     List<UserDto> getAllUsers();
 
     void emailConfirm(String email);
 
-    boolean isValidUUID(String uuid);
+    boolean isNotValidUUID(String uuid);
 }
