@@ -1,3 +1,5 @@
+node_modules
+
 *.class
 
 # Mobile Tools for Java (J2ME)
@@ -28,3 +30,4 @@ effective-settings.xml
 *.lck
 *.jar
 */dependency-reduced-pom.xml
+
