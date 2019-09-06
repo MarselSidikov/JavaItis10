@@ -25,7 +25,7 @@ public class CommunitiesController {
     }
 
     @GetMapping("/communities")
-    public ResponseEntity<CommunitiesResponseDto> getAll() {
+    public ResponseEntity<CommunitiesResponseDto> getAll(@RequestParam("token") String token) {
         CommunitiesResponseDto responseBody = CommunitiesResponseDto.builder()
                 .data(communitiesService.getAll())
                 .build();

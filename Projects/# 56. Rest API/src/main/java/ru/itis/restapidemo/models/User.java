@@ -27,4 +27,8 @@ public class User {
 
     @ManyToMany(mappedBy = "users")
     private List<Dialog> dialogs;
+
+    private String email;
+    private String hashPassword;
+
 }

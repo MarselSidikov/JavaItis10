@@ -5,17 +5,16 @@
             src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-url-parser/2.3.1/purl.js"></script>
     <script src="js/main.js"></script>
-    <title>Пользователи</title>
+    <title>Сообщества</title>
 </head>
-<body onload="getAllUsers()">
-<h1>Пользователи</h1>
+<body onload="getCommunitiesByUser()">
+<h1>Сообщества пользователя</h1>
 <div>
-    <table id="users_table">
+    <table id="communities_table">
         <tr>
-            <th>Имя</th>
-            <th>Фамилия</th>
-            <th>Действие</th>
+            <th>Название</th>
         </tr>
     </table>
 </div>
