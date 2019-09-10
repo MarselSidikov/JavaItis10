@@ -5,11 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TokenDto {
-    private Long id;
-    private String token;
+public class UsersResponseDto {
+    private List<UserDto> data;
 }

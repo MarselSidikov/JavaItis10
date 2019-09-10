@@ -42,6 +42,7 @@ public class LoginServiceImpl implements LoginService {
                 tokensRepository.save(token);
                 return TokenDto.builder()
                         .token(token.getValue())
+                        .id(user.getId())
                         .build();
             } else {
                 throw new BadCredentialsException("Incorrect email or password");

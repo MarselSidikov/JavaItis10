@@ -5,12 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Data
 public class UserResponseDto {
-    private List<UserDto> data;
+    private UserDto data;
 }

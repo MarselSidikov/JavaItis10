@@ -2,6 +2,7 @@ package ru.itis.restapidemo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.itis.restapidemo.dto.CommunitiesResponseDto;
@@ -11,11 +12,13 @@ import ru.itis.restapidemo.services.CommunitiesService;
 
 @RestController
 public class CommunitiesController {
+
     @Autowired
     private CommunitiesService communitiesService;
 
     @PostMapping("/communities")
-    public ResponseEntity<CommunityResponseDto> addCommunity(@RequestBody CommunityForm community) {
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<CommunityResponseDto> addCommunity(@RequestHeader("token") String token, @RequestBody CommunityForm community) {
         CommunityResponseDto responseBody = CommunityResponseDto.builder()
                 .data(communitiesService.addCommunity(community))
                 .build();
@@ -25,7 +28,8 @@ public class CommunitiesController {
     }
 
     @GetMapping("/communities")
-    public ResponseEntity<CommunitiesResponseDto> getAll(@RequestParam("token") String token) {
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<CommunitiesResponseDto> getAll(@RequestHeader("token") String token) {
         CommunitiesResponseDto responseBody = CommunitiesResponseDto.builder()
                 .data(communitiesService.getAll())
                 .build();
@@ -34,7 +38,8 @@ public class CommunitiesController {
     }
 
     @DeleteMapping("/communities/{community-id}")
-    public ResponseEntity<Object> deleteCommunity(@PathVariable("community-id") Long communityId) {
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public ResponseEntity<Object> deleteCommunity(@RequestHeader("token") String token, @PathVariable("community-id") Long communityId) {
         communitiesService.deleteCommunity(communityId);
         return ResponseEntity.ok().build();
     }

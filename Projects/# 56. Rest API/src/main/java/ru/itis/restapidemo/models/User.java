@@ -28,7 +28,13 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<Dialog> dialogs;
 
+    @Enumerated(value = EnumType.STRING)
+    private UserRole role;
+
     private String email;
     private String hashPassword;
 
+    public boolean isAdmin() {
+        return this.role.equals(UserRole.ADMIN);
+    }
 }

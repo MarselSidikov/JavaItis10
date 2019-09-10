@@ -23,7 +23,8 @@ public class TokenAuthentication implements Authentication {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().toString());
+        return Collections.singleton(authority);
     }
 
     @Override

@@ -11,9 +11,8 @@ public class TokenAuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        System.out.println("IN FILTER");
         HttpServletRequest request = (HttpServletRequest)servletRequest;
-        String token = request.getParameter("token");
+        String token = request.getHeader("token");
         if (token != null) {
             TokenAuthentication authentication = new TokenAuthentication();
             authentication.setToken(token);
