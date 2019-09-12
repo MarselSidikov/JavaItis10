@@ -24,7 +24,6 @@ public class CarProxy extends Car {
 
     @Override
     public void go() {
-        // АСПЕКТ = Advice + joinpoint
         carBeforeAdvice.before();
         if (carMethodAdvice == null) {
             inner.go();
