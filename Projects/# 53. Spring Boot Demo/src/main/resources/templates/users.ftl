@@ -1,3 +1,4 @@
+<#import "spring.ftl" as spring />
 <html>
 <head>
     <title>Title</title>
@@ -12,9 +13,9 @@
         <thead class="thead-dark">
         <tr>
             <th>ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Действия</th>
+            <th><@spring.message 'users.first_name'/></th>
+            <th><@spring.message 'users.last_name'/></th>
+            <th><@spring.message 'users.actions'/></th>
         </tr>
         </thead>
         <#list users as user>
