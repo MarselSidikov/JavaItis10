@@ -46,7 +46,7 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<MessageDto> getMessagesFor(String forUser) {
         synchronized (messages.get(forUser)) {
-            while (messages.get(forUser).isEmpty()) {
+            if (messages.get(forUser).isEmpty()) {
                 messages.get(forUser).wait();
             }
             List<MessageDto> result = new ArrayList<>(messages.get(forUser));
