@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
-public class ChatServiceImpl implements ChatService {
+public class ChatServiceILongPollingImpl implements ChatService {
 
     /**
      *
@@ -33,24 +33,36 @@ public class ChatServiceImpl implements ChatService {
             // добавляем его в список рассылок
             messages.put(from, new ArrayList<>());
         }
-        // добавляем в каждый список пришедшее сообщение
+        // Пробегаем всю карту с парами UUID-страницы-список сообщений
         for (Map.Entry<String, List<MessageDto>> entry : messages.entrySet()) {
+            // блокируем список сообщений для текущего пользователя
             synchronized (entry.getValue()) {
+                // добавляем в этот список само сообщение
                 entry.getValue().add(message);
+                // оповещаем потоки, которые ждут на этом списке,
+                // что данным списком сообщений можно пользоваться
                 entry.getValue().notifyAll();
             }
         }
     }
 
+    // получаем список текущих сообщений для пользователя
     @SneakyThrows
     @Override
     public List<MessageDto> getMessagesFor(String forUser) {
+        // блокируем сообщения текущего пользователя
         synchronized (messages.get(forUser)) {
+            // если в текущий момент список пустой
             if (messages.get(forUser).isEmpty()) {
+                // отправляем поток (запрос пользователя) в ожидание
                 messages.get(forUser).wait();
             }
+            // если у списка был вызван notify то мы приходим сюда
+            // вытаскиваем все сообщения для пользователя
             List<MessageDto> result = new ArrayList<>(messages.get(forUser));
+            // очищаем исходный список
             messages.get(forUser).clear();
+            // и отправляем список сообщений пользователю
             return result;
         }
     }

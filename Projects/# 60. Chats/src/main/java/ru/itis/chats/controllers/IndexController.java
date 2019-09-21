@@ -11,6 +11,6 @@ public class IndexController {
     @GetMapping("/")
     public String getIndexPage(Model model) {
         model.addAttribute("id", UUID.randomUUID().toString());
-        return "index";
+        return "index_web_sockets";
     }
 }

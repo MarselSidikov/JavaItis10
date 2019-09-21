@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.itis.chats.forms.MessageDto;
 import ru.itis.chats.services.ChatService;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
-@RestController
-public class ChatController {
+//@RestController
+public class ChatLongPollingController {
 
     @Autowired
     private ChatService chatService;
